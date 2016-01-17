@@ -73,11 +73,13 @@ You can load an environment using the shell function defined previously:
 
     $ env | egrep -i "lang|wine"
     LANG=en_US.UTF-8
+
     $ wenv touhou
     $ env | egrep -i "lang|wine"
     LANG=ja_JP.UTF-8
     WINEPREFIX=/home/user/.local/share/wineprefixes/touhou
     WINEARCH=win32
+
     $ wenv photoshop
     $ env | egrep -i "lang|wine"
     LANG=en_US.UTF-8
@@ -93,11 +95,13 @@ You can reset Wine environment settings using the shell function defined previou
 
     $ env | egrep -i "lang|wine"
     LANG=en_US.UTF-8
+
     $ wenv touhou
     $ env | egrep -i "lang|wine"
     LANG=ja_JP.UTF-8
     WINEPREFIX=/home/user/.local/share/wineprefixes/touhou
     WINEARCH=win32
+
     $ wenvoff
     $ env | egrep -i "lang|wine"
     LANG=en_US.UTF-8
