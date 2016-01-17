@@ -89,6 +89,27 @@ You can load an environment using the shell function defined previously:
 After loading an environment, you can use `wine` and `winecfg` freely without
 worrying about your Wine environment.
 
+### Listing environments
+
+You can list existing environments:
+
+    $ winenv list
+    touhou
+    photoshop
+
+Verbose listing:
+
+    $ winenv list -v
+    touhou
+    prefix=/home/user/.local/share/wineprefixes/touhou
+    arch=win32
+    lang=ja_JP.UTF-8
+
+    photoshop
+    prefix=/home/user/.local/share/wineprefixes/photoshop
+    arch=win64
+    lang=en_US.UTF-8
+
 ### Resetting environments
 
 You can reset Wine environment settings using the shell function defined previously:

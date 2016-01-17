@@ -13,11 +13,13 @@
 # the License.
 
 from . import add
+from . import list
 from . import load
 from . import reset
 
 COMMANDS = [
     add,
+    list,
     load,
     reset,
 ]
