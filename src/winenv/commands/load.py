@@ -18,8 +18,9 @@ import sys
 from winenv import configlib
 from winenv import shells
 
+logger = logging.getLogger(__name__)
+
 HELP = 'Load an environment.'
-_LOGGER = logging.getLogger(__name__)
 
 
 def setup_parser(subparsers):
@@ -56,7 +57,7 @@ def main(args):
     config = configlib.load_config(args.config)
     name = args.name
     if not config.has_section(name):
-        _LOGGER.error("%s environment doesn't exist", name)
+        logger.error("%s environment doesn't exist", name)
         sys.exit(1)
     shell = shells.SHELLS[args.shell]
     for var, value in load_vars(config[name]):
