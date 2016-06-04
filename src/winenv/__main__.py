@@ -32,3 +32,7 @@ def main():
         parser.print_help()
     else:
         func(args)
+
+
+if __name__ == '__main__':
+    main()
