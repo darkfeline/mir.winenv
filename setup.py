@@ -21,7 +21,7 @@ setup(
     packages=find_packages('src'),
     entry_points={
         'console_scripts': [
-            'winenv = winenv.main:main',
+            'winenv = winenv.__main__:main',
         ],
     },
 
