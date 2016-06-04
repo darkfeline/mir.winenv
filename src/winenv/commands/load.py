@@ -16,6 +16,7 @@ import logging
 import sys
 
 from winenv import configlib
+from winenv import shells
 
 HELP = 'Load an environment.'
 _LOGGER = logging.getLogger(__name__)
@@ -30,8 +31,25 @@ def setup_parser(subparsers):
     parser.add_argument('--config',
                         default=configlib.CONFIG_PATH,
                         help='Configuration file to use.')
+    parser.add_argument(
+        '--shell',
+        choices=shells.SHELLS,
+        default=shells.DEFAULT_SHELL,
+    )
     parser.add_argument('name', help='Name of environment')
     parser.set_defaults(func=main)
+
+
+_CONFIG_VAR_MAP = [
+    ('WINEPREFIX', 'prefix'),
+    ('WINEARCH', 'arch'),
+    ('LANG', 'lang'),
+]
+
+
+def load_vars(config_section):
+    for var_name, config_name in _CONFIG_VAR_MAP:
+        yield var_name, config_section[config_name]
 
 
 def main(args):
@@ -40,6 +58,6 @@ def main(args):
     if not config.has_section(name):
         _LOGGER.error("%s environment doesn't exist", name)
         sys.exit(1)
-    print('export WINEPREFIX={}'.format(config[name]['prefix']))
-    print('export WINEARCH={}'.format(config[name]['arch']))
-    print('export LANG={}'.format(config[name]['lang']))
+    shell = shells.SHELLS[args.shell]
+    for var, value in load_vars(config[name]):
+        print(shell.export_variable(var, value))

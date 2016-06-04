@@ -41,6 +41,16 @@ Put the following in your configuration file:
         eval "$(winenv reset)"
     }
 
+fish shell is also supported::
+
+    function wenv -a env_name
+      eval (winenv load --shell fish $env_name)
+    end
+
+    function wenvoff
+      eval (winenv reset --shell fish)
+    end
+
 Usage
 -----
 

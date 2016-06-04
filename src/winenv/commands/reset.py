@@ -13,6 +13,7 @@
 # the License.
 
 from winenv import configlib
+from winenv import shells
 
 HELP = 'Reset environment.'
 
@@ -26,11 +27,17 @@ def setup_parser(subparsers):
     parser.add_argument('--config',
                         default=configlib.CONFIG_PATH,
                         help='Configuration file to use.')
+    parser.add_argument(
+        '--shell',
+        choices=shells.SHELLS,
+        default=shells.DEFAULT_SHELL,
+    )
     parser.set_defaults(func=main)
 
 
 def main(args):
     config = configlib.load_config(args.config)
-    print('unset WINEPREFIX')
-    print('unset WINEARCH')
-    print('export LANG={}'.format(config['DEFAULT']['lang']))
+    shell = shells.SHELLS[args.shell]
+    print(shell.unset_variable('WINEPREFIX'))
+    print(shell.unset_variable('WINEARCH'))
+    print(shell.export_variable('LANG', config['DEFAULT']['lang']))
