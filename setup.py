@@ -16,7 +16,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='winenv',
-    version='0.1.0',
+    version='0.2.0',
     package_dir={'': 'src'},
     packages=find_packages('src'),
     entry_points={
