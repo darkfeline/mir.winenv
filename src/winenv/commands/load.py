@@ -60,5 +60,7 @@ def main(args):
         logger.error("%s environment doesn't exist", name)
         sys.exit(1)
     shell = shells.SHELLS[args.shell]
-    for var, value in load_vars(config[name]):
-        print(shell.export_variable(var, value))
+    print(shell.command_separator.join((
+        shell.export_variable(var, value)
+        for var, value in load_vars(config[name])
+    )))

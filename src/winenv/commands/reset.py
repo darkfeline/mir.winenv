@@ -38,6 +38,8 @@ def setup_parser(subparsers):
 def main(args):
     config = configlib.load_config(args.config)
     shell = shells.SHELLS[args.shell]
-    print(shell.unset_variable('WINEPREFIX'))
-    print(shell.unset_variable('WINEARCH'))
-    print(shell.export_variable('LANG', config['DEFAULT']['lang']))
+    print(shell.command_separator.join((
+        shell.unset_variable('WINEPREFIX'),
+        shell.unset_variable('WINEARCH'),
+        shell.export_variable('LANG', config['DEFAULT']['lang']),
+    )))
