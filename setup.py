@@ -23,11 +23,11 @@ setup(
     url='https://github.com/darkfeline/mir.winenv',
     author='Allen Li',
     author_email='darkfeline@felesatra.moe',
-    license='Apache 2.0',
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Console',
         'Intended Audience :: End Users/Desktop',
+        'License :: OSI Approved :: Apache Software License',
         'Programming Language :: Python :: 3.5',
     ],
 
