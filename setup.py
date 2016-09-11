@@ -12,11 +12,11 @@
 # License for the specific language governing permissions and limitations under
 # the License.
 
-from setuptools import setup, find_packages
+from setuptools import setup
 
 setup(
     name='mir.winenv',
-    version='0.3.0',
+    version='0.3.1',
     description='Manage Wine environments',
     long_description='',
     keywords='',
@@ -31,7 +31,7 @@ setup(
         'Programming Language :: Python :: 3.5',
     ],
 
-    packages=find_packages(),
+    packages=['mir.winenv'],
     entry_points={
         'console_scripts': [
             'winenv = mir.winenv.__main__:main',
