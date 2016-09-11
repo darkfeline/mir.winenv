@@ -12,15 +12,20 @@
 # License for the specific language governing permissions and limitations under
 # the License.
 
-from winenv import configlib
-from winenv import shells
+import logging
+import sys
 
-HELP = 'Reset environment.'
+from mir.winenv import configlib
+from mir.winenv import shells
+
+logger = logging.getLogger(__name__)
+
+HELP = 'Load an environment.'
 
 
 def setup_parser(subparsers):
     parser = subparsers.add_parser(
-        'reset',
+        'load',
         description=HELP,
         help=HELP,
     )
@@ -32,14 +37,30 @@ def setup_parser(subparsers):
         choices=shells.SHELLS,
         default=shells.DEFAULT_SHELL,
     )
+    parser.add_argument('name', help='Name of environment')
     parser.set_defaults(func=main)
+
+
+_CONFIG_VAR_MAP = [
+    ('WINEPREFIX', 'prefix'),
+    ('WINEARCH', 'arch'),
+    ('LANG', 'lang'),
+]
+
+
+def load_vars(config_section):
+    for var_name, config_name in _CONFIG_VAR_MAP:
+        yield var_name, config_section[config_name]
 
 
 def main(args):
     config = configlib.load_config(args.config)
+    name = args.name
+    if not config.has_section(name):
+        logger.error("%s environment doesn't exist", name)
+        sys.exit(1)
     shell = shells.SHELLS[args.shell]
     print(shell.command_separator.join((
-        shell.unset_variable('WINEPREFIX'),
-        shell.unset_variable('WINEARCH'),
-        shell.export_variable('LANG', config['DEFAULT']['lang']),
+        shell.export_variable(var, value)
+        for var, value in load_vars(config[name])
     )))

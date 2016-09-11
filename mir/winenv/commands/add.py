@@ -14,7 +14,7 @@
 
 import os
 
-from winenv import configlib
+from mir.winenv import configlib
 
 HELP = 'Add an environment.'
 

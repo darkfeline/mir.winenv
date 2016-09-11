@@ -12,39 +12,34 @@
 # License for the specific language governing permissions and limitations under
 # the License.
 
-from winenv import configlib
+from mir.winenv import configlib
+from mir.winenv import shells
 
-HELP = 'List environments.'
+HELP = 'Reset environment.'
 
 
 def setup_parser(subparsers):
     parser = subparsers.add_parser(
-        'list',
+        'reset',
         description=HELP,
         help=HELP,
     )
     parser.add_argument('--config',
                         default=configlib.CONFIG_PATH,
                         help='Configuration file to use.')
-    parser.add_argument('-v', '--verbose',
-                        action='store_true',
-                        help='List environment settings.')
+    parser.add_argument(
+        '--shell',
+        choices=shells.SHELLS,
+        default=shells.DEFAULT_SHELL,
+    )
     parser.set_defaults(func=main)
-
-_KEYS = ['prefix', 'arch', 'lang']
 
 
 def main(args):
     config = configlib.load_config(args.config)
-    if args.verbose:
-        sections = []
-        for section in config.sections():
-            lines = []
-            lines.append(section)
-            for key in _KEYS:
-                lines.append('{}={}'.format(key, config[section][key]))
-            sections.append('\n'.join(lines))
-        print('\n\n'.join(sections))
-    else:
-        for section in config.sections():
-            print(section)
+    shell = shells.SHELLS[args.shell]
+    print(shell.command_separator.join((
+        shell.unset_variable('WINEPREFIX'),
+        shell.unset_variable('WINEARCH'),
+        shell.export_variable('LANG', config['DEFAULT']['lang']),
+    )))

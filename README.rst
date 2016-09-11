@@ -14,24 +14,24 @@ Dependendies
 Installation
 ------------
 
-System-wide or for packaging:
+System-wide or for packaging::
 
     python setup.py install
 
-For the current user:
+For the current user::
 
     python setup.py install --user
 
-You will have to add `~/.local/bin` to your shell's `PATH` if it isn't present
-already; this is where Python installs scripts for users.
+You will have to add ``~/.local/bin`` to your shell's ``PATH`` if it isn't
+present already; this is where Python installs scripts for users.
 
 Shell setup
 -----------
 
-You need to set up your shell as well.  winenv works with POSIX `sh` or any
+You need to set up your shell as well.  winenv works with POSIX ``sh`` or any
 compatible shell (Bash, ZSH, etc.).
 
-Put the following in your configuration file:
+Put the following in your configuration file::
 
     wenv() {
         eval "$(winenv load $1)"
@@ -54,32 +54,35 @@ fish shell is also supported::
 Usage
 -----
 
-### Adding environments
+Adding environments
+^^^^^^^^^^^^^^^^^^^
 
-First, you add environments:
+First, you add environments::
 
     $ winenv add program1 -a win32 -l en_US.UTF-8 -p ~/.local/share/wineprefixes/program1
 
-This adds an environment named `program1`, with the associated environment
-variables `WINEARCH=win32`, `LANG=en_US.UTF-8`,
-`WINEPREFIX=~/.local/share/wineprefixes/program1`.
+This adds an environment named ``program1``, with the associated environment
+variables ``WINEARCH=win32``, ``LANG=en_US.UTF-8``,
+``WINEPREFIX=~/.local/share/wineprefixes/program1``.
 
-The options are optional.  `-a` defaults to `win32`, `-l` defaults to
-`en_US.UTF-8`, and `-p` defaults to `~/.local/share/wineprefixes/<name of environment>`
+The options are optional.  ``-a`` defaults to ``win32``, ``-l`` defaults to
+``en_US.UTF-8``, and ``-p`` defaults to ``~/.local/share/wineprefixes/<name of
+environment>``.
 
 The default architecture and locale can be configured (see Configuration
 section).  In particular, you should configure the default locale to match your
 system.
 
-Here are some more examples:
+Here are some more examples::
 
     $ winenv add touhou -a win32 -l ja_JP.UTF-8
     $ winenv add photoshop -a win64
     $ winenv add testing -p ~/temp
 
-### Loading environments
+Loading environments
+^^^^^^^^^^^^^^^^^^^^
 
-You can load an environment using the shell function defined previously:
+You can load an environment using the shell function defined previously::
 
     $ env | egrep -i "lang|wine"
     LANG=en_US.UTF-8
@@ -96,18 +99,19 @@ You can load an environment using the shell function defined previously:
     WINEPREFIX=/home/user/.local/share/wineprefixes/photoshop
     WINEARCH=win64
 
-After loading an environment, you can use `wine` and `winecfg` freely without
-worrying about your Wine environment.
+After loading an environment, you can use ``wine`` and ``winecfg`` freely
+without worrying about your Wine environment.
 
-### Listing environments
+Listing environments
+^^^^^^^^^^^^^^^^^^^^
 
-You can list existing environments:
+You can list existing environments::
 
     $ winenv list
     touhou
     photoshop
 
-Verbose listing:
+Verbose listing::
 
     $ winenv list -v
     touhou
@@ -120,9 +124,11 @@ Verbose listing:
     arch=win64
     lang=en_US.UTF-8
 
-### Resetting environments
+Resetting environments
+^^^^^^^^^^^^^^^^^^^^^^
 
-You can reset Wine environment settings using the shell function defined previously:
+You can reset Wine environment settings using the shell function defined
+previously::
 
     $ env | egrep -i "lang|wine"
     LANG=en_US.UTF-8
@@ -137,16 +143,17 @@ You can reset Wine environment settings using the shell function defined previou
     $ env | egrep -i "lang|wine"
     LANG=en_US.UTF-8
 
-### More help
+More help
+^^^^^^^^^
 
-Make use of the `--help` option as needed.
+Make use of the ``--help`` option as needed.
 
 Configuration and data
 ----------------------
 
 winenv stores its data in a configuration file.  The default path is
-`~/.config/winenv/config.ini`.  You can supply a different file via the
-`--config` option.
+``~/.config/winenv/config.ini``.  You can supply a different file via the
+``--config`` option.
 
-The configuration file uses the INI format, as parsed by Python's `configparser`
+The configuration file uses the INI format, as parsed by Python's ``configparser``
 module.

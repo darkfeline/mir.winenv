@@ -15,18 +15,26 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='winenv',
-    version='0.2.0',
-    package_dir={'': 'src'},
-    packages=find_packages('src'),
-    entry_points={
-        'console_scripts': [
-            'winenv = winenv.__main__:main',
-        ],
-    },
-
+    name='mir.winenv',
+    version='0.3.0',
+    description='Manage Wine environments',
+    long_description='',
+    keywords='',
+    url='https://github.com/darkfeline/mir.winenv',
     author='Allen Li',
     author_email='darkfeline@felesatra.moe',
-    description='Manage Wine environments',
     license='Apache 2.0',
+    classifiers=[
+        'Development Status :: 4 - Beta',
+        'Environment :: Console',
+        'Intended Audience :: End Users/Desktop',
+        'Programming Language :: Python :: 3.5',
+    ],
+
+    packages=find_packages(),
+    entry_points={
+        'console_scripts': [
+            'winenv = mir.winenv.__main__:main',
+        ],
+    },
 )
