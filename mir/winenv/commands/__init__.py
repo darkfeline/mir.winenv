@@ -1,4 +1,4 @@
-# Copyright (C) 2016  Allen Li
+# Copyright (C) 2016, 2017  Allen Li
 
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not
 # use this file except in compliance with the License. You may obtain a copy of
@@ -12,20 +12,26 @@
 # License for the specific language governing permissions and limitations under
 # the License.
 
-from . import add
-from . import list
-from . import load
-from . import reset
-
-COMMANDS = [
-    add,
-    list,
-    load,
-    reset,
-]
+import importlib
 
 
 def setup_parser(parser):
+    """Setup ArgumentParser with commands."""
     subparsers = parser.add_subparsers(title='Commands')
     for command in COMMANDS:
         command.setup_parser(subparsers)
+
+
+COMMANDS = []
+
+
+def _add_command_module(module_name: str):
+    """Add a submodule as a command."""
+    mod = importlib.import_module(f'mir.winenv.{module_name}')
+    COMMANDS.append(mod)
+
+
+_add_command_module('add')
+_add_command_module('list')
+_add_command_module('load')
+_add_command_module('reset')
