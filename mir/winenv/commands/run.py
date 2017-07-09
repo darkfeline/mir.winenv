@@ -1,4 +1,4 @@
-# Copyright (C) 2016  Allen Li
+# Copyright (C) 2017  Allen Li
 
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not
 # use this file except in compliance with the License. You may obtain a copy of
@@ -12,55 +12,47 @@
 # License for the specific language governing permissions and limitations under
 # the License.
 
+import argparse
 import logging
+import os
 import sys
 
 from mir.winenv import configlib
-from mir.winenv import shells
 
 logger = logging.getLogger(__name__)
 
-HELP = 'Load an environment.'
+HELP = 'Run a command in a wine environment.'
 
 
 def setup_parser(subparsers):
     parser = subparsers.add_parser(
-        'load',
+        'run',
         description=HELP,
         help=HELP,
     )
     parser.add_argument('--config',
                         default=configlib.CONFIG_PATH,
                         help='Configuration file to use.')
-    parser.add_argument(
-        '--shell',
-        choices=shells.SHELLS,
-        default=shells.DEFAULT_SHELL,
-    )
     parser.add_argument('name', help='Name of environment')
+    parser.add_argument('command', help='Command to run')
+    parser.add_argument('command_args',
+                        nargs=argparse.REMAINDER,
+                        help='Arguments to pass to command')
     parser.set_defaults(func=main)
-
-
-_CONFIG_VAR_MAP = [
-    ('WINEPREFIX', 'prefix'),
-    ('WINEARCH', 'arch'),
-    ('LANG', 'lang'),
-]
-
-
-def load_vars(config_section):
-    for var_name, config_name in _CONFIG_VAR_MAP:
-        yield var_name, config_section[config_name]
 
 
 def main(args):
     config = configlib.load_config(args.config)
-    name = args.name
-    if not config.has_section(name):
-        logger.error("%s environment doesn't exist", name)
+    if not config.has_section(args.name):
+        logger.error("%s environment doesn't exist", args.name)
         sys.exit(1)
-    shell = shells.SHELLS[args.shell]
-    print(shell.command_separator.join((
-        shell.export_variable(var, value)
-        for var, value in load_vars(config[name])
-    )))
+    os.execvpe(
+        args.command,
+        [args.command, *args.command_args],
+        _get_environment(args.name))
+
+
+def _get_environment(config, env_name):
+    env = os.environ.copy()
+    env.update(configlib.get_env_vars(config, env_name))
+    return env

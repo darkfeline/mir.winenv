@@ -33,5 +33,5 @@ def _add_command_module(module_name: str):
 
 _add_command_module('add')
 _add_command_module('list')
-_add_command_module('load')
 _add_command_module('reset')
+_add_command_module('run')
