@@ -1,4 +1,4 @@
-# Copyright (C) 2016  Allen Li
+# Copyright (C) 2016, 2017  Allen Li
 
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not
 # use this file except in compliance with the License. You may obtain a copy of
@@ -13,11 +13,10 @@
 # the License.
 
 import configparser
-import os
-import tempfile
+from pathlib import Path
 
-CONFIG_PATH = os.path.join(os.environ['HOME'], '.config',
-                           'winenv', 'config.ini')
+
+CONFIG_PATH = (Path.home() / '.config' / 'winenv' / 'config.ini')
 
 
 def make_config():
@@ -28,20 +27,18 @@ def make_config():
     return config
 
 
-def load_config(path):
+def load_config(path: 'PathLike'):
     """Safely read config file."""
+    path = Path(path)
     config = make_config()
-    if os.path.isfile(path):
+    if path.is_file():
         config.read(path)
     return config
 
 
-def save_config(config, path):
+def save_config(config, path: 'PathLike'):
     """Safely save config file."""
-    dirpath = os.path.dirname(path)
-    if not os.path.exists(dirpath):
-        os.mkdir(dirpath)
-    temp_fd, temp_path = tempfile.mkstemp(dir=dirpath)
-    with os.fdopen(temp_fd, 'w') as file:
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open('w') as file:
         config.write(file)
-    os.rename(temp_path, path)
