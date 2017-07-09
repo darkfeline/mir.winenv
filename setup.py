@@ -1,4 +1,4 @@
-# Copyright (C) 2016  Allen Li
+# Copyright (C) 2016, 2017  Allen Li
 
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not
 # use this file except in compliance with the License. You may obtain a copy of
@@ -16,7 +16,7 @@ from setuptools import setup
 
 setup(
     name='mir.winenv',
-    version='0.3.1',
+    version='0.4.0',
     description='Manage Wine environments',
     long_description='',
     keywords='',
@@ -28,13 +28,8 @@ setup(
         'Environment :: Console',
         'Intended Audience :: End Users/Desktop',
         'License :: OSI Approved :: Apache Software License',
-        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
     ],
 
     packages=['mir.winenv'],
-    entry_points={
-        'console_scripts': [
-            'winenv = mir.winenv.__main__:main',
-        ],
-    },
 )
