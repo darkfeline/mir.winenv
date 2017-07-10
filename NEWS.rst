@@ -3,6 +3,14 @@ mir.winenv Release Notes
 
 This project uses `semantic versioning <http://semver.org/>`_.
 
+0.4.1 ()
+--------
+
+Fixed
+^^^^^
+
+- Fixed ugly error when no command is supplied.
+
 0.4.0 (2017-07-09)
 ------------------
 

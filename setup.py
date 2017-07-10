@@ -16,7 +16,7 @@ from setuptools import setup
 
 setup(
     name='mir.winenv',
-    version='0.4.0',
+    version='0.4.1',
     description='Manage Wine environments',
     long_description='',
     keywords='',
