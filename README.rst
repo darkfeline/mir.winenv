@@ -27,14 +27,28 @@ Installation
 
 System-wide or for packaging::
 
-    python setup.py install
+    python3.6 setup.py install
 
 For the current user::
 
-    python setup.py install --user
+    python3.6 setup.py install --user
 
 Usage
 -----
+
+Making an aliase
+^^^^^^^^^^^^^^^^
+
+By default, winenv is run through Python::
+
+  $ python3.6 -m mir.winenv
+
+The reason for this is to reduce ambiguity when using different
+versions of Python or a virtualenv.
+
+For convenience, you can create an alias in your preferred shell::
+
+  alias winenv='python3.6 -m mir.winenv'
 
 Adding environments
 ^^^^^^^^^^^^^^^^^^^
