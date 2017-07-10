@@ -26,6 +26,9 @@ def main(args):
         parser = argparse.ArgumentParser()
         commands.setup_parser(parser)
         args = parser.parse_args(args)
+        if not hasattr(args, 'func'):
+            parser.print_help()
+            sys.exit(2)
         func = args.func
         func(args)
     except SystemExit as e:

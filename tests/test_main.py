@@ -52,6 +52,11 @@ def test_invalid_command(config_file):
     assert exit != 0
 
 
+def test_no_command(config_file):
+    exit = main([])
+    assert exit != 0
+
+
 def test_add_defaults(config_file):
     exit = main(['add', 'touhou'])
     assert exit == 0
