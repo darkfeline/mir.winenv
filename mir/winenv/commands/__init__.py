@@ -27,11 +27,10 @@ COMMANDS = []
 
 def _add_command_module(module_name: str):
     """Add a submodule as a command."""
-    mod = importlib.import_module(f'mir.winenv.{module_name}')
+    mod = importlib.import_module(f'mir.winenv.commands.{module_name}')
     COMMANDS.append(mod)
 
 
 _add_command_module('add')
 _add_command_module('list')
-_add_command_module('reset')
 _add_command_module('run')
