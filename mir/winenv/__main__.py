@@ -30,8 +30,8 @@ def main(args):
     except AttributeError:
         parser.print_help()
     else:
-        func(args)
+        return func(args) or 0
 
 
 if __name__ == '__main__':
-    main(sys.argv[1:])
+    sys.exit(main(sys.argv[1:]))
