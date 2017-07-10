@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import subprocess
+import sys
 from unittest import mock
 
 import pytest
@@ -43,6 +45,11 @@ prefix = /tmp/prefix
 arch = win32
 lang = ja_JP.UTF-8
 '''.strip()
+
+
+def test_invalid_command(config_file):
+    exit = main(['foobar'])
+    assert exit != 0
 
 
 def test_add_defaults(config_file):
@@ -153,3 +160,27 @@ prefix=~/.local/share/wineprefixes/other
 arch=win32
 lang=en_US.UTF-8
 '''
+
+
+def test_run(config_file):
+    config_file.write_text('''\
+[touhou]
+prefix = /tmp/touhou
+arch = win32
+lang = ja_JP.UTF-8
+''')
+    with mock.patch('os.execvpe') as e:
+        exit = main(['run', 'touhou', 'wine', '-some', 'args'])
+    assert exit == 0
+    assert e.call_args[0][0] == 'wine'
+    assert e.call_args[0][1] == ['wine', '-some', 'args']
+    assert e.call_args[0][2]['WINEPREFIX'] == '/tmp/touhou'
+    assert e.call_args[0][2]['WINEARCH'] == 'win32'
+    assert e.call_args[0][2]['LANG'] == 'ja_JP.UTF-8'
+
+
+def test_run_missing_section_should_return_1(config_file):
+    with mock.patch('os.execvpe') as e:
+        exit = main(['run', 'touhou', 'wine', '-some', 'args'])
+    assert exit == 1
+    e.assert_not_called()

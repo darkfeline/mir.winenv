@@ -1,4 +1,4 @@
-# Copyright (C) 2016  Allen Li
+# Copyright (C) 2016, 2017  Allen Li
 
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not
 # use this file except in compliance with the License. You may obtain a copy of
@@ -21,16 +21,17 @@ from mir.winenv import commands
 
 def main(args):
     """Entry point."""
-    logging.basicConfig(level='INFO')
-    parser = argparse.ArgumentParser()
-    commands.setup_parser(parser)
-    args = parser.parse_args(args)
     try:
+        logging.basicConfig(level='INFO')
+        parser = argparse.ArgumentParser()
+        commands.setup_parser(parser)
+        args = parser.parse_args(args)
         func = args.func
-    except AttributeError:
-        parser.print_help()
+        func(args)
+    except SystemExit as e:
+        return e.code
     else:
-        return func(args) or 0
+        return 0
 
 
 if __name__ == '__main__':
