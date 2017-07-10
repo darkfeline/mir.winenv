@@ -9,9 +9,9 @@ This project uses `semantic versioning <http://semver.org/>`_.
 Changed
 ^^^^^^^
 
-- ``load`` replaced with ``run``.  Instead of printing environment
-  variables for a shell to evaluate, instead run a command with the
-  modified environment.
+- ``load`` and ``reset`` replaced with ``run``.  Instead of printing
+  environment variables for a shell to evaluate, instead run a command
+  with the modified environment.
 - Now requires Python 3.6.
 
 0.2.0 (2016-06-03)
