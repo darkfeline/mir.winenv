@@ -14,8 +14,8 @@ Changed
   modified environment.
 - Now requires Python 3.6.
 
-0.2.0 ()
---------
+0.2.0 (2016-06-03)
+------------------
 
 Added
 ^^^^^
@@ -23,7 +23,7 @@ Added
 - Added list command.
 - Added support for fish and shell selection.
 
-0.1.0 ()
---------
+0.1.0 (2016-01-16)
+------------------
 
 Initial release.
