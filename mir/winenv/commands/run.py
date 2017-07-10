@@ -49,7 +49,7 @@ def main(args):
     os.execvpe(
         args.command,
         [args.command, *args.command_args],
-        _get_environment(args.name))
+        _get_environment(config, args.name))
 
 
 def _get_environment(config, env_name):
