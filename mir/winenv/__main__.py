@@ -14,18 +14,17 @@
 
 import argparse
 import logging
+import sys
 
 from mir.winenv import commands
 
 
-def main():
+def main(args):
     """Entry point."""
     logging.basicConfig(level='INFO')
     parser = argparse.ArgumentParser()
     commands.setup_parser(parser)
-
-    args = parser.parse_args()
-
+    args = parser.parse_args(args)
     try:
         func = args.func
     except AttributeError:
@@ -35,4 +34,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    main(sys.argv[1:])
