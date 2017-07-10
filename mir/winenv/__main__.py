@@ -15,7 +15,7 @@
 import argparse
 import logging
 
-from . import commands
+from mir.winenv import commands
 
 
 def main():

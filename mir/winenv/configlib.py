@@ -13,6 +13,7 @@
 # the License.
 
 import configparser
+import os
 from pathlib import Path
 
 
@@ -44,19 +45,13 @@ def save_config(config, path: 'PathLike'):
         config.write(file)
 
 
-_CONFIG_VAR_MAP = [
-    ('WINEPREFIX', 'prefix'),
-    ('WINEARCH', 'arch'),
-    ('LANG', 'lang'),
-]
-
-
 def get_env_vars(config, env_name):
     """Return a dict of environment variables for the named environment."""
     if not config.has_section(env_name):
         raise ValueError(f"{env_name} environment doesn't exist")
     config_section = config[env_name]
     return {
-        env_var: config_section[option_name]
-        for env_var, option_name in _CONFIG_VAR_MAP
+        'WINEPREFIX': os.path.expanduser(config_section['prefix']),
+        'WINEARCH': config_section['arch'],
+        'LANG': config_section['lang'],
     }

@@ -12,8 +12,6 @@
 # License for the specific language governing permissions and limitations under
 # the License.
 
-import os
-
 from mir.winenv import configlib
 
 HELP = 'Add an environment.'
@@ -41,8 +39,7 @@ def main(args):
     if name not in config:
         config.add_section(name)
     if args.prefix is None:
-        args.prefix = os.path.join(os.environ['HOME'], '.local', 'share',
-                                   'wineprefixes', args.name)
+        args.prefix = f'~/.local/share/wineprefixes/{args.name}'
     config[name]['prefix'] = args.prefix
     if args.arch is not None:
         config[name]['arch'] = args.arch
