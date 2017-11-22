@@ -36,8 +36,8 @@ For the current user::
 Usage
 -----
 
-Making an aliase
-^^^^^^^^^^^^^^^^
+Making an alias
+^^^^^^^^^^^^^^^
 
 By default, winenv is run through Python::
 
